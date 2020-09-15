@@ -96,11 +96,11 @@ function Clip({ item, i }) {
               ref={videoWrapper}
             >
               {/* <img
-                        src="https://uploads-ssl.webflow.com/5b8085feb775a93368662104/5eefd85b0be60463e04b9187_video-placeholder.v1.svg"
-                        height=""
-                        alt=""
-                        className="image"
-                      /> */}
+              src="https://uploads-ssl.webflow.com/5b8085feb775a93368662104/5eefd85b0be60463e04b9187_video-placeholder.v1.svg"
+              height=""
+              alt=""
+              className="image"
+              /> */}
 
               <video
                 className="video"
