@@ -22,7 +22,7 @@ function Clip({ item, i }) {
     // opacity: '0',
   }
 
-  let wrapperAnimation = { height: '0PX' }
+  let wrapperInitialHeight = { height: '0PX' }
 
   function itemToggle() {
     wrapper.current.classList.toggle('open')
@@ -115,7 +115,7 @@ function Clip({ item, i }) {
               </video>
             </div>
 
-            <div style={wrapperAnimation} className="share-wrapper">
+            <div style={wrapperInitialHeight} className="share-wrapper">
               <a href="/#" className="share-button w-button">
                 share
               </a>
