@@ -73,7 +73,11 @@ function Clip({ item, i }) {
                         className="image"
                       /> */}
 
-              <video controls>
+              <video
+                className={`video video-${i}`}
+                controls
+                onClick={(e) => e.stopPropagation()}
+              >
                 <source
                   onError={() => setMissingMedia(true)}
                   src={`https://s3.wasabisys.com/police-brutality/doucette-thread/${item.Video['Image Filename']}`}
