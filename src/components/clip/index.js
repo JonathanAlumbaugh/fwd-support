@@ -32,7 +32,8 @@ function Clip({ item, i }) {
   console.log('test', item)
 
   return (
-    item.Video['Image Filename'].match(/\.mp4/) && (
+    item.Video['Image Filename'].match(/\.mp4/) &&
+    !missingMedia && (
       <div key={i} role="listitem" className="collection-item w-dyn-item">
         <div
           data-w-id="b9af0117-1182-b4ce-9988-75dec161b399"
