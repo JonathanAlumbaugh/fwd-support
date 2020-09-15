@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 
+import Linkify from 'react-linkify'
+
 function Clip({ item, i }) {
   let [missingMedia, setMissingMedia] = useState(false)
   let [itemOpen, setItemOpen] = useState(false)
@@ -75,7 +77,9 @@ function Clip({ item, i }) {
                 {!itemOpen && item['Doucette Text'].slice(0, 100)}
                 {!itemOpen && item['Doucette Text'].length > 100 ? '...' : ''}
 
-                {itemOpen && item['Doucette Text']}
+                <Linkify onClick={(e) => e.stopPropagation()}>
+                  {itemOpen && item['Doucette Text']}
+                </Linkify>
               </p>
             </div>
 
