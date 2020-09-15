@@ -72,8 +72,10 @@ function Clip({ item, i }) {
               </div>
 
               <p className="description">
-                {item['Doucette Text'].slice(0, 100)}
-                {item['Doucette Text'].length > 100 ? '...' : ''}
+                {!itemOpen && item['Doucette Text'].slice(0, 100)}
+                {!itemOpen && item['Doucette Text'].length > 100 ? '...' : ''}
+
+                {itemOpen && item['Doucette Text']}
               </p>
             </div>
 
