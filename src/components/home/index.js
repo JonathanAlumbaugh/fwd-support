@@ -10,7 +10,7 @@ function HomePage() {
     <div className="police-brutality">
       <div className="collection-list-wrapper w-dyn-list">
         <div className="collection-list w-dyn-items">
-          {library?.slice(0, 50).map((item, i) => {
+          {library?.slice(0, 100).map((item, i) => {
             return <Clip item={item} i={i} key={item['TGD Number']} />
           })}
         </div>
