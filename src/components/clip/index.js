@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 
 function Clip({ item, i }) {
   let [missingMedia, setMissingMedia] = useState(false)
+  let [itemOpen, setItemOpen] = useState(false)
 
   let itemContainerStyles = {
     WebkitTransform:
@@ -31,6 +32,7 @@ function Clip({ item, i }) {
 
     // Pauses video on close, and prevents media keys from playing it while closed
     if (!el.classList.contains('open')) {
+      setItemOpen(false)
       vidEl.pause()
       navigator.mediaSession.setActionHandler('play', () => {})
       navigator.mediaSession.setActionHandler('pause', () => {})
@@ -38,6 +40,10 @@ function Clip({ item, i }) {
       navigator.mediaSession.setActionHandler('seekforward', () => {})
       navigator.mediaSession.setActionHandler('previoustrack', () => {})
       navigator.mediaSession.setActionHandler('nexttrack', () => {})
+    }
+
+    if (el.classList.contains('open')) {
+      setItemOpen(true)
     }
   }
 
