@@ -1,18 +1,21 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import library from '../../shared/doucette-media.json'
 
-import Clip from '../../components/clip'
-import './Home.scss'
+import Clip from '../clip'
+import './Library.scss'
 
-function HomePage() {
+function Library() {
   return (
     <div className="police-brutality">
       <div className="collection-list-wrapper w-dyn-list">
         <div className="collection-list w-dyn-items">
-          {library?.slice(0, 100).map((item, i) => {
-            return <Clip item={item} i={i} key={item['TGD Number']} />
-          })}
+          {library
+            ?.filter((i) => i.Video['Image Filename'].match(/.mp4/))
+            .slice(0, 100)
+            .map((item, i) => {
+              return <Clip item={item} i={i} key={item['TGD Number']} />
+            })}
         </div>
 
         {!library && (
@@ -25,4 +28,4 @@ function HomePage() {
   )
 }
 
-export default HomePage
+export default Library

@@ -51,7 +51,6 @@ function Clip({ item, i }) {
   }
 
   return (
-    item.Video['Image Filename'].match(/\.mp4/) &&
     !missingMedia && (
       <div
         key={i}
