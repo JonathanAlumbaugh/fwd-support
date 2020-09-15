@@ -17,7 +17,7 @@ function Clip({ item, i }) {
 
   let wrapperAnimation = { height: '0PX' }
 
-  function slideToggle(qry, vid) {
+  function itemToggle(qry, vid) {
     let el = document.querySelector(qry)
     let vidEl = document.querySelector(vid)
 
@@ -54,7 +54,7 @@ function Clip({ item, i }) {
           <div
             data-w-id="b9af0117-1182-b4ce-9988-75dec161b39c"
             className="item-link"
-            onClick={() => slideToggle(`.video-wrapper-${i}`, `.video-${i}`)}
+            onClick={() => itemToggle(`.video-wrapper-${i}`, `.video-${i}`)}
           >
             <div className="content-wrapper">
               <div className="double-title-wrapper">
