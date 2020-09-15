@@ -1,10 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, createRef } from 'react'
 
 import Linkify from 'react-linkify'
 
 function Clip({ item, i }) {
   let [missingMedia, setMissingMedia] = useState(false)
   let [itemOpen, setItemOpen] = useState(false)
+
+  const wrapper = createRef(null)
+  const videoWrapper = createRef(null)
+  const videoEl = createRef(null)
 
   let itemContainerStyles = {
     WebkitTransform:
@@ -20,22 +24,19 @@ function Clip({ item, i }) {
 
   let wrapperAnimation = { height: '0PX' }
 
-  function itemToggle(qry, vid) {
-    let el = document.querySelector(qry)
-    let vidEl = document.querySelector(vid)
-
-    // The following 2 lines are ONLY needed if you ever want to start in a 'open' state. Due to the way browsers
-    // work it needs a double of this (or something like console.log(el.scrollHeight);) to prevent the render skipping
-    // el.style.height = el.scrollHeight + 'px'
-    // console.log(el.scrollHeight)
-
-    el.classList.toggle('open')
-    el.style.height = el.classList.contains('open') ? el.scrollHeight + 'px' : 0
+  function itemToggle() {
+    wrapper.current.classList.toggle('open')
+    videoWrapper.current.classList.toggle('open')
+    videoWrapper.current.style.height = videoWrapper.current.classList.contains(
+      'open',
+    )
+      ? videoWrapper.current.scrollHeight + 'px'
+      : 0
 
     // Pauses video on close, and prevents media keys from playing it while closed
-    if (!el.classList.contains('open')) {
+    if (!videoWrapper.current.classList.contains('open')) {
       setItemOpen(false)
-      vidEl.pause()
+      videoEl.current.pause()
       navigator.mediaSession.setActionHandler('play', () => {})
       navigator.mediaSession.setActionHandler('pause', () => {})
       navigator.mediaSession.setActionHandler('seekbackward', () => {})
@@ -44,7 +45,7 @@ function Clip({ item, i }) {
       navigator.mediaSession.setActionHandler('nexttrack', () => {})
     }
 
-    if (el.classList.contains('open')) {
+    if (videoWrapper.current.classList.contains('open')) {
       setItemOpen(true)
     }
   }
@@ -52,7 +53,12 @@ function Clip({ item, i }) {
   return (
     item.Video['Image Filename'].match(/\.mp4/) &&
     !missingMedia && (
-      <div key={i} role="listitem" className="collection-item w-dyn-item">
+      <div
+        key={i}
+        role="listitem"
+        className="collection-item w-dyn-item"
+        ref={wrapper}
+      >
         <div
           data-w-id="b9af0117-1182-b4ce-9988-75dec161b399"
           style={itemContainerStyles}
@@ -62,7 +68,7 @@ function Clip({ item, i }) {
           <div
             data-w-id="b9af0117-1182-b4ce-9988-75dec161b39c"
             className="item-link"
-            onClick={() => itemToggle(`.video-wrapper-${i}`, `.video-${i}`)}
+            onClick={() => itemToggle()}
           >
             <div className="content-wrapper">
               <div className="double-title-wrapper">
@@ -84,9 +90,10 @@ function Clip({ item, i }) {
             </div>
 
             <div
-              style={wrapperAnimation}
-              className={`video-wrapper video-wrapper-${i}`}
+              style={wrapperInitialHeight}
+              className="video-wrapper"
               data-collapsed="true"
+              ref={videoWrapper}
             >
               {/* <img
                         src="https://uploads-ssl.webflow.com/5b8085feb775a93368662104/5eefd85b0be60463e04b9187_video-placeholder.v1.svg"
@@ -96,9 +103,10 @@ function Clip({ item, i }) {
                       /> */}
 
               <video
-                className={`video video-${i}`}
+                className="video"
                 controls
                 onClick={(e) => e.stopPropagation()}
+                ref={videoEl}
               >
                 <source
                   onError={() => setMissingMedia(true)}
