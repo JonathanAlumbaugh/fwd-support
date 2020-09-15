@@ -17,19 +17,29 @@ function Clip({ item, i }) {
 
   let wrapperAnimation = { height: '0PX' }
 
-  function slideToggle(qry) {
+  function slideToggle(qry, vid) {
     let el = document.querySelector(qry)
+    let vidEl = document.querySelector(vid)
 
     // The following 2 lines are ONLY needed if you ever want to start in a 'open' state. Due to the way browsers
     // work it needs a double of this (or something like console.log(el.scrollHeight);) to prevent the render skipping
-    el.style.height = el.scrollHeight + 'px'
-    console.log(el.scrollHeight)
+    // el.style.height = el.scrollHeight + 'px'
+    // console.log(el.scrollHeight)
 
     el.classList.toggle('open')
     el.style.height = el.classList.contains('open') ? el.scrollHeight + 'px' : 0
-  }
 
-  console.log('test', item)
+    // Pauses video on close, and prevents media keys from playing it while closed
+    if (!el.classList.contains('open')) {
+      vidEl.pause()
+      navigator.mediaSession.setActionHandler('play', () => {})
+      navigator.mediaSession.setActionHandler('pause', () => {})
+      navigator.mediaSession.setActionHandler('seekbackward', () => {})
+      navigator.mediaSession.setActionHandler('seekforward', () => {})
+      navigator.mediaSession.setActionHandler('previoustrack', () => {})
+      navigator.mediaSession.setActionHandler('nexttrack', () => {})
+    }
+  }
 
   return (
     item.Video['Image Filename'].match(/\.mp4/) &&
@@ -44,7 +54,7 @@ function Clip({ item, i }) {
           <div
             data-w-id="b9af0117-1182-b4ce-9988-75dec161b39c"
             className="item-link"
-            onClick={() => slideToggle(`.video-wrapper-${i}`)}
+            onClick={() => slideToggle(`.video-wrapper-${i}`, `.video-${i}`)}
           >
             <div className="content-wrapper">
               <div className="double-title-wrapper">
