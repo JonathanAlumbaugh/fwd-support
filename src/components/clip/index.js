@@ -1,6 +1,7 @@
 import React, { useState, createRef } from 'react'
 
 import Linkify from 'react-linkify'
+import { motion } from 'framer-motion'
 
 function Clip({ item, i }) {
   let [missingMedia, setMissingMedia] = useState(false)
@@ -10,16 +11,18 @@ function Clip({ item, i }) {
   const videoWrapper = createRef(null)
   const videoEl = createRef(null)
 
-  let itemContainerStyles = {
-    WebkitTransform:
-      'translate3d(0, 50PX, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)',
-    MozTransform:
-      'translate3d(0, 50PX, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)',
-    msTransform:
-      'translate3d(0, 50PX, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)',
-    transform:
-      'translate3d(0, 50PX, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)',
-    // opacity: '0',
+  const variants = {
+    hidden: { opacity: 0, y: -50 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        when: 'beforeChildren',
+        staggerChildren: 0.1,
+        delay: `0.${i}`,
+      },
+    },
+    hover: { scale: 1.02, y: -5 },
   }
 
   let wrapperInitialHeight = { height: '0PX' }
@@ -52,22 +55,26 @@ function Clip({ item, i }) {
 
   return (
     !missingMedia && (
-      <div
+      <motion.div
         key={i}
         role="listitem"
         className="collection-item w-dyn-item"
         ref={wrapper}
+        initial="hidden"
+        animate="visible"
+        variants={variants}
       >
         <div
           data-w-id="b9af0117-1182-b4ce-9988-75dec161b399"
-          style={itemContainerStyles}
           className="item-container"
         >
           <h2 className="item-number">{item['TGD Number']}</h2>
-          <div
+          <motion.div
             data-w-id="b9af0117-1182-b4ce-9988-75dec161b39c"
             className="item-link"
             onClick={() => itemToggle()}
+            whileHover="hover"
+            variants={variants}
           >
             <div className="content-wrapper">
               <div className="double-title-wrapper">
@@ -128,9 +135,9 @@ function Clip({ item, i }) {
                 email
               </a>
             </div>
-          </div>
+          </motion.div>
         </div>
-      </div>
+      </motion.div>
     )
   )
 }
