@@ -19,6 +19,7 @@ function Why() {
 
   return (
     <div className="copy-container w-container">
+      {/* INTRO */}
       <div className="intro">
         <h3 className="section-title">— Why does this exist?</h3>
         <div className="interactive-headline-wrapper">
@@ -94,6 +95,8 @@ function Why() {
         </p>
         <a href="/#">Text Link</a>
       </div>
+
+      {/* RESOURCES */}
       <div className="resources">
         <h3 className="section-title">— More resources</h3>
         <p className="resource-description-copy">
@@ -159,6 +162,8 @@ function Why() {
           </div>
         </div>
       </div>
+
+      {/* HACK THIS */}
       <div className="hack-this">
         <h3 className="section-title">— Hack my shit</h3>
         <h2 className="headline">
