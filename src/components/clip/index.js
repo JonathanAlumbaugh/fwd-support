@@ -18,10 +18,14 @@ function Clip({ item, i }) {
       y: 0,
       transition: {
         when: 'beforeChildren',
-        staggerChildren: 0.1,
         delay: `0.${i}`,
       },
     },
+  }
+
+  const card = {
+    hidden: { opacity: 0, y: -50 },
+    visible: { opacity: 1, y: 0, transition: { delay: 0.01 } },
     hover: { scale: 1.02, y: -5 },
   }
 
@@ -74,7 +78,7 @@ function Clip({ item, i }) {
             className="item-link"
             onClick={() => itemToggle()}
             whileHover="hover"
-            variants={variants}
+            variants={card}
           >
             <div className="content-wrapper">
               <div className="double-title-wrapper">
