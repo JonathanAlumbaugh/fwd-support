@@ -164,7 +164,7 @@ function Why() {
       </div>
 
       {/* HACK THIS */}
-      <div className="hack-this">
+      {/* <div className="hack-this">
         <h3 className="section-title">— Hack my shit</h3>
         <h2 className="headline">
           This website is also an API. Use it, abuse it, add your tool to the
@@ -180,7 +180,7 @@ function Why() {
           <br />
           stuff here
         </p>
-      </div>
+      </div> */}
     </div>
   )
 }
