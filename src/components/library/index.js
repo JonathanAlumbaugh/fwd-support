@@ -12,7 +12,7 @@ function Library() {
         <div className="collection-list w-dyn-items">
           {library
             ?.filter((i) => i.Video['Image Filename'].match(/.mp4/))
-            .slice(0, 100)
+            .slice(0, 40)
             .map((item, i) => {
               return <Clip item={item} i={i} key={item['TGD Number']} />
             })}
