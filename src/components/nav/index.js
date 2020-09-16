@@ -21,7 +21,7 @@ function Nav() {
       className="navbar w-nav"
     >
       {/* SEARCH */}
-      <div
+      {/* <div
         className={`w-container search-container ${
           searchShown ? ' search-container-shown' : ''
         }`}
@@ -59,10 +59,10 @@ function Nav() {
             searchShown ? ' search-background-shown' : ''
           }`}
         ></div>
-      </div>
+      </div> */}
 
       {/* CONTACT */}
-      <div
+      {/* <div
         className={`w-container contact-container ${
           contactShown ? ' contact-container-shown' : ''
         }`}
@@ -138,7 +138,7 @@ function Nav() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* NAVBAR */}
       <div className="nav-container w-container">
@@ -166,7 +166,7 @@ function Nav() {
           >
             Why?
           </Link>
-          <button
+          {/* <button
             data-w-id="7996200d-150f-a560-79d5-7ba7b8b5f92f"
             className="nav-link w-nav-link unstyled-button"
             onClick={() => setContactShown(!searchShown)}
@@ -181,7 +181,7 @@ function Nav() {
             onClick={() => setSearchShown(!searchShown)}
           >
             Search
-          </button>
+          </button> */}
         </nav>
 
         <div className="menu-button w-nav-button">
