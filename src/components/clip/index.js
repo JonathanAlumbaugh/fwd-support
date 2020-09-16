@@ -28,7 +28,7 @@ function Clip({ item, i }) {
   let wrapperInitialHeight = { height: '0PX' }
 
   function itemToggle() {
-    wrapper.current.classList.toggle('open')
+    // wrapper.current.classList.toggle('open')
     videoWrapper.current.classList.toggle('open')
     videoWrapper.current.style.height = videoWrapper.current.classList.contains(
       'open',
