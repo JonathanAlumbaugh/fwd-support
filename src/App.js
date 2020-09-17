@@ -10,7 +10,7 @@ import './App.scss'
 function App() {
   return (
     <div>
-      <script src="./components/html/js/webflow" />
+      {/* <script src="./components/html/js/webflow" /> */}
       <Router>
         <Navbar />
 
