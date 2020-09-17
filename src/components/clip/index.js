@@ -5,11 +5,9 @@ import { motion } from 'framer-motion'
 
 function Clip({ item, i }) {
   let [missingMedia, setMissingMedia] = useState(false)
-  let [itemOpen, setItemOpen] = useState(false)
+  let [isOpen, setIsOpen] = useState(false)
 
-  const wrapper = createRef(null)
-  const videoWrapper = createRef(null)
-  const videoEl = createRef(null)
+  const video = createRef(null)
 
   const variants = {
     hidden: { opacity: 0, y: -50 },
@@ -31,30 +29,17 @@ function Clip({ item, i }) {
 
   let wrapperInitialHeight = { height: '0PX' }
 
-  function itemToggle() {
-    // wrapper.current.classList.toggle('open')
-    videoWrapper.current.classList.toggle('open')
-    videoWrapper.current.style.height = videoWrapper.current.classList.contains(
-      'open',
-    )
-      ? videoWrapper.current.scrollHeight + 'px'
-      : 0
+  const toggleOpen = () => setIsOpen(!isOpen)
 
-    // Pauses video on close, and prevents media keys from playing it while closed
-    if (!videoWrapper.current.classList.contains('open')) {
-      setItemOpen(false)
-      videoEl.current.pause()
-      navigator.mediaSession.setActionHandler('play', () => {})
-      navigator.mediaSession.setActionHandler('pause', () => {})
-      navigator.mediaSession.setActionHandler('seekbackward', () => {})
-      navigator.mediaSession.setActionHandler('seekforward', () => {})
-      navigator.mediaSession.setActionHandler('previoustrack', () => {})
-      navigator.mediaSession.setActionHandler('nexttrack', () => {})
-    }
-
-    if (videoWrapper.current.classList.contains('open')) {
-      setItemOpen(true)
-    }
+  // Pauses video on close, and prevents media keys from playing it while closed
+  if (!isOpen) {
+    video.current && video.current.pause()
+    navigator.mediaSession.setActionHandler('play', () => {})
+    navigator.mediaSession.setActionHandler('pause', () => {})
+    navigator.mediaSession.setActionHandler('seekbackward', () => {})
+    navigator.mediaSession.setActionHandler('seekforward', () => {})
+    navigator.mediaSession.setActionHandler('previoustrack', () => {})
+    navigator.mediaSession.setActionHandler('nexttrack', () => {})
   }
 
   return (
@@ -63,7 +48,7 @@ function Clip({ item, i }) {
         key={i}
         role="listitem"
         className="collection-item w-dyn-item"
-        ref={wrapper}
+        // ref={wrapper}
         initial="hidden"
         animate="visible"
         variants={variants}
@@ -76,7 +61,7 @@ function Clip({ item, i }) {
           <motion.div
             data-w-id="b9af0117-1182-b4ce-9988-75dec161b39c"
             className="item-link"
-            onClick={() => itemToggle()}
+            onClick={toggleOpen}
             whileHover="hover"
             variants={card}
           >
@@ -90,11 +75,11 @@ function Clip({ item, i }) {
               </div>
 
               <p className="description">
-                {!itemOpen && item['Doucette Text'].slice(0, 100)}
-                {!itemOpen && item['Doucette Text'].length > 100 ? '...' : ''}
+                {!isOpen && item['Doucette Text'].slice(0, 100)}
+                {!isOpen && item['Doucette Text'].length > 100 ? '...' : ''}
 
                 <Linkify onClick={(e) => e.stopPropagation()}>
-                  {itemOpen && item['Doucette Text']}
+                  {isOpen && item['Doucette Text']}
                 </Linkify>
               </p>
             </div>
@@ -103,7 +88,7 @@ function Clip({ item, i }) {
               style={wrapperInitialHeight}
               className="video-wrapper"
               data-collapsed="true"
-              ref={videoWrapper}
+              // ref={videoWrapper}
             >
               {/* <img
               src="https://uploads-ssl.webflow.com/5b8085feb775a93368662104/5eefd85b0be60463e04b9187_video-placeholder.v1.svg"
@@ -116,7 +101,7 @@ function Clip({ item, i }) {
                 className="video"
                 controls
                 onClick={(e) => e.stopPropagation()}
-                ref={videoEl}
+                ref={video}
               >
                 <source
                   onError={() => setMissingMedia(true)}
