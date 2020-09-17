@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 import Navbar from './components/nav'
 import HomeContainer from './containers/home'
@@ -14,8 +14,14 @@ function App() {
       <Router>
         <Navbar />
 
-        <Route name="Home" path="/" component={HomeContainer} exact />
-        <Route name="Why" path="/why" component={WhyContainer} />
+        <Switch>
+          <Route name="Why" path="/why" component={WhyContainer} exact />
+          <Route
+            name="Home"
+            path={['/:cardId', '/']}
+            component={HomeContainer}
+          />
+        </Switch>
       </Router>
       <Footer />
     </div>
