@@ -33,7 +33,7 @@ function Clip({ item, i }) {
 
   // Pauses video on close, and prevents media keys from playing it while closed
   if (!isOpen) {
-    video.current && video.current.pause()
+    videoRef.current && videoRef.current.pause()
     navigator.mediaSession.setActionHandler('play', () => {})
     navigator.mediaSession.setActionHandler('pause', () => {})
     navigator.mediaSession.setActionHandler('seekbackward', () => {})
@@ -99,9 +99,9 @@ function Clip({ item, i }) {
 
               <video
                 className="video"
-                controls
                 onClick={(e) => e.stopPropagation()}
-                ref={video}
+                controls
+                ref={videoRef}
               >
                 <source
                   onError={() => setMissingMedia(true)}
