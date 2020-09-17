@@ -2,14 +2,14 @@ import React from 'react'
 
 import Featured from '../../components/featured'
 import Filters from '../../components/filters'
-import Library from '../../components/library'
+import { CardList } from '../../components/CardList'
 
 function HomeContainer() {
   return (
     <div className="main-container w-container">
       <Featured />
       <Filters />
-      <Library />
+      <CardList />
     </div>
   )
 }
