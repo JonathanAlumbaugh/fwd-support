@@ -33,7 +33,7 @@ export const CardList = () => (
     <div className="collection-list-wrapper w-dyn-list">
       <div className="collection-list w-dyn-items">
         <Router>
-          <Route path={['/:cardId', '/']} component={List} exact />
+          <Route path={['/:cardId', '/']} component={List} />
         </Router>
       </div>
 

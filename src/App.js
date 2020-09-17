@@ -14,8 +14,8 @@ function App() {
       <Router>
         <Navbar />
 
-        <Route name="Home" path="/" component={HomeContainer} />
-        <Route name="Why" path="/why" component={WhyContainer} exact />
+        <Route name="Home" path="/" component={HomeContainer} exact />
+        <Route name="Why" path="/why" component={WhyContainer} />
       </Router>
       <Footer />
     </div>
