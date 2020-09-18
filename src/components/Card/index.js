@@ -1,17 +1,23 @@
 import React, { useState, createRef } from 'react'
 
 import Linkify from 'react-linkify'
-import { motion, AnimatePresence, AnimateSharedLayout } from 'framer-motion'
+import {
+  motion,
+  AnimatePresence,
+  AnimateSharedLayout,
+  useMotionValue,
+} from 'framer-motion'
 import { Link } from 'react-router-dom'
 
 import './Card.scss'
 
 function Card({ isSelected, history, i, id, ...card }) {
-  console.log(card)
   let [missingMedia, setMissingMedia] = useState(false)
 
   const containerRef = createRef(null)
   const videoRef = createRef(null)
+
+  const zIndex = useMotionValue(isSelected ? 2 : 0)
 
   // Pauses video on close, and prevents media keys from playing it while closed
   if (!isSelected) {
@@ -24,8 +30,6 @@ function Card({ isSelected, history, i, id, ...card }) {
     navigator.mediaSession.setActionHandler('nexttrack', () => {})
   }
 
-  console.log('isselected', isSelected)
-
   return (
     !missingMedia && (
       <div
@@ -34,10 +38,14 @@ function Card({ isSelected, history, i, id, ...card }) {
         ref={containerRef}
         key={i}
       >
-        {/* <Overlay isSelected={isSelected} /> */}
-        <div className="item-container">
+        <Overlay isSelected={isSelected} />
+        <div
+          className={`card-content-container item-container ${
+            isSelected && 'open'
+          }`}
+        >
           <h2 className="item-number">{card['TGD Number']}</h2>
-          <div className="item-link">
+          <motion.div className="item-link" style={{ zIndex }}>
             <div className="content-wrapper">
               <div className="double-title-wrapper">
                 <div className="title-wrapper">
@@ -48,9 +56,12 @@ function Card({ isSelected, history, i, id, ...card }) {
               </div>
 
               <p className="description">
-                {card['Doucette Text'].slice(0, 100)}
+                {
+                  card['Doucette Text']
+                  // .slice(0, 100)
+                }
 
-                {!isSelected ? (
+                {/* {!isSelected ? (
                   card['Doucette Text'].length > 100 ? (
                     '...'
                   ) : (
@@ -60,17 +71,17 @@ function Card({ isSelected, history, i, id, ...card }) {
                   <Linkify onClick={(e) => e.stopPropagation()}>
                     {card['Doucette Text'].slice(100)}
                   </Linkify>
-                )}
+                )} */}
               </p>
             </div>
 
             <div className="video-wrapper">
               {/* <img
-              src="https://uploads-ssl.webflow.com/5b8085feb775a93368662104/5eefd85b0be60463e04b9187_video-placeholder.v1.svg"
-              height=""
-              alt=""
-              className="image"
-              /> */}
+                src="https://uploads-ssl.webflow.com/5b8085feb775a93368662104/5eefd85b0be60463e04b9187_video-placeholder.v1.svg"
+                height=""
+                alt=""
+                className="image"
+                /> */}
 
               <video
                 className="video"
@@ -85,13 +96,15 @@ function Card({ isSelected, history, i, id, ...card }) {
               </video>
             </div>
 
-            {!isSelected && (
+            {!isSelected ? (
               <Link
                 className="card-open-link"
                 to={`${card['TGD Number']}-${card.State}-${card.City}`}
               />
+            ) : (
+              <Link className="card-open-link" to="/" />
             )}
-          </div>
+          </motion.div>
         </div>
       </div>
     )
