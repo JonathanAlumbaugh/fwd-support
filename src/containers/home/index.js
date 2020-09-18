@@ -2,14 +2,14 @@ import React from 'react'
 
 import Featured from '../../components/featured'
 import Filters from '../../components/filters'
-import { CardList } from '../../components/CardList'
+import CardList from '../../components/CardList'
 
-function HomeContainer() {
+function HomeContainer({ match, history }) {
   return (
     <div className="main-container w-container">
       <Featured />
       <Filters />
-      <CardList />
+      <CardList cardId={match.params.cardId} history={history} />
     </div>
   )
 }
