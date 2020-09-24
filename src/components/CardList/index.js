@@ -1,4 +1,5 @@
 import React from 'react'
+import { AnimateSharedLayout } from 'framer-motion'
 
 import cardData from '../../shared/doucette-media.json'
 
@@ -12,8 +13,8 @@ export const List = ({ cardId, history }) => {
       // .filter((i) => i.Video['Image Filename'].match(/.mp4/))
       .slice(0, 40)
       .map((card, i) => {
-        if (card.Video['Image Filename'].match(/.mp4/)) {
-          return (
+        return (
+          card.Video['Image Filename'].match(/.mp4/) && (
             <Card
               key={card['TGD Number']}
               isSelected={
@@ -24,7 +25,7 @@ export const List = ({ cardId, history }) => {
               {...card}
             />
           )
-        } else return null
+        )
       })
   )
 }
