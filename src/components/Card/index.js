@@ -1,14 +1,15 @@
 import React, { useState, createRef } from 'react'
-
 import Linkify from 'react-linkify'
+import { Tweet } from 'react-twitter-widgets'
 import { motion, AnimatePresence, AnimateSharedLayout } from 'framer-motion'
 import { Link } from 'react-router-dom'
 
 import './Card.scss'
 
-function Card({ isSelected, history, i, id, ...card }) {
-  console.log(card)
-  let [missingMedia, setMissingMedia] = useState(false)
+function Card({ isSelected, history, ...card }) {
+  // console.log(card)
+  const [missingMedia, setMissingMedia] = useState(false)
+  const tweetId = card['Tweet URL'].match(/[^/]*$/)
 
   const containerRef = createRef(null)
   const videoRef = createRef(null)
@@ -24,77 +25,86 @@ function Card({ isSelected, history, i, id, ...card }) {
     navigator.mediaSession.setActionHandler('nexttrack', () => {})
   }
 
-  console.log('isselected', isSelected)
+  // console.log('isselected', isSelected)
+  // console.log('missing media', missingMedia)
+  console.log('media', missingMedia, 'tweet', tweetId[0])
 
   return (
-    !missingMedia && (
-      <div
-        className="collection-item w-dyn-item"
-        role="listitem"
-        ref={containerRef}
-        key={i}
-      >
-        {/* <Overlay isSelected={isSelected} /> */}
-        <div className="item-container">
-          <h2 className="item-number">{card['TGD Number']}</h2>
-          <div className="item-link">
-            <div className="content-wrapper">
-              <div className="double-title-wrapper">
-                <div className="title-wrapper">
-                  <h2 className="state">{card.State}</h2>
-                  <h2 className="city">—</h2>
-                  <h2 className="city">{card.City}</h2>
-                </div>
+    <div
+      className="collection-item w-dyn-item"
+      role="listitem"
+      ref={containerRef}
+    >
+      {/* <Overlay isSelected={isSelected} /> */}
+      <div className="item-container">
+        <h2 className="item-number">{card.id + 1}</h2>
+        <div className="item-link">
+          <div className="content-wrapper">
+            <div className="double-title-wrapper">
+              <div className="title-wrapper">
+                <h2 className="state">{card.State}</h2>
+                <h2 className="city">—</h2>
+                <h2 className="city">{card.City}</h2>
               </div>
-
-              <p className="description">
-                {card['Doucette Text'].slice(0, 100)}
-
-                {!isSelected ? (
-                  card['Doucette Text'].length > 100 ? (
-                    '...'
-                  ) : (
-                    ''
-                  )
-                ) : (
-                  <Linkify onClick={(e) => e.stopPropagation()}>
-                    {card['Doucette Text'].slice(100)}
-                  </Linkify>
-                )}
-              </p>
             </div>
 
-            <div className="video-wrapper">
-              {/* <img
+            <p className="description">
+              {card['Doucette Text'].slice(0, 100)}
+
+              {!isSelected ? (
+                card['Doucette Text'].length > 100 ? (
+                  '...'
+                ) : (
+                  ''
+                )
+              ) : (
+                <Linkify onClick={(e) => e.stopPropagation()}>
+                  {card['Doucette Text'].slice(100)}
+                </Linkify>
+              )}
+            </p>
+          </div>
+
+          <div className="video-wrapper">
+            {/* <img
               src="https://uploads-ssl.webflow.com/5b8085feb775a93368662104/5eefd85b0be60463e04b9187_video-placeholder.v1.svg"
               height=""
               alt=""
               className="image"
               /> */}
 
-              <video
-                className="video"
-                onClick={(e) => e.stopPropagation()}
-                controls
-                ref={videoRef}
-              >
-                <source
-                  onError={() => setMissingMedia(true)}
-                  src={`https://s3.wasabisys.com/police-brutality/doucette-thread/${card.Video['Image Filename']}`}
-                />
-              </video>
-            </div>
-
-            {!isSelected && (
-              <Link
-                className="card-open-link"
-                to={`${card['TGD Number']}-${card.State}-${card.City}`}
+            <video
+              className="video"
+              onClick={(e) => e.stopPropagation()}
+              controls
+              ref={videoRef}
+            >
+              <source
+                onError={() => setMissingMedia(true)}
+                src={`https://s3.wasabisys.com/police-brutality/doucette-thread/${card.Video['Image Filename']}`}
               />
-            )}
+            </video>
           </div>
+
+          {isSelected && (
+            <div className="tweet-wrapper">
+              <Tweet
+                tweetId={tweetId[0]}
+                onLoad={console.log(tweetId)}
+                renderError={(_err) => <p>Could not load tweet</p>}
+              />
+            </div>
+          )}
+
+          {!isSelected && (
+            <Link
+              className="card-open-link"
+              to={`${card['TGD Number']}-${card.State}-${card.City}`}
+            />
+          )}
         </div>
       </div>
-    )
+    </div>
   )
 }
 
