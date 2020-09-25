@@ -24,6 +24,8 @@ export default ({ cardId, history }) => {
   const filter = ''
   const [pageNumber, setPageNumber] = useState(1)
   const [itemLimit, setItemLimit] = useState(20)
+  const [totalItems, setTotalItems] = useState()
+  const [totalPages, setTotalPages] = useState()
 
   useEffect(() => {
     function fetchApi() {
@@ -33,9 +35,16 @@ export default ({ cardId, history }) => {
             `https://api.fwd.support/items?${filter}_page=${pageNumber}&_limit=${itemLimit}`,
           )
           .then((res) => {
+            let headers = res.headers
+            let total = parseInt(headers['x-total-count'], 10)
+            setTotalItems(total)
+
+            let totalPagesVar = Math.round(totalItems / itemLimit)
+            let totalPagesLoc = parseInt(totalPagesVar, 10)
+            setTotalPages(totalPagesLoc)
+
             res = res.data
             setCardData([...res])
-            console.log('response', res)
           })
       } catch (e) {
         console.log('error', e)
@@ -43,12 +52,39 @@ export default ({ cardId, history }) => {
     }
 
     fetchApi()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [pageNumber, itemLimit, totalItems])
 
   return (
     <div className="police-brutality">
       <div className="collection-list-wrapper w-dyn-list">
+        <button
+          onClick={() => {
+            pageNumber >= 1 ? setPageNumber(pageNumber - 1) : setPageNumber(1)
+          }}
+        >
+          &lt;prev
+        </button>
+        {Array.apply(null, { length: totalPages }).map((p, i) => {
+          return (
+            <button
+              key={i}
+              onClick={() => {
+                setPageNumber(i)
+              }}
+            >
+              {i}
+            </button>
+          )
+        })}
+        <button
+          onClick={() => {
+            pageNumber < totalPages
+              ? setPageNumber(pageNumber + 1)
+              : setPageNumber(totalPages)
+          }}
+        >
+          next&gt;
+        </button>
         <div className="collection-list w-dyn-items">
           <List cardId={cardId} cardData={cardData} history={history} />
         </div>
