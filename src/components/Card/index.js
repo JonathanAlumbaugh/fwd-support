@@ -27,7 +27,7 @@ function Card({ isSelected, history, ...card }) {
 
   // console.log('isselected', isSelected)
   // console.log('missing media', missingMedia)
-  console.log('media', missingMedia, 'tweet', tweetId[0])
+  // console.log('media', missingMedia, 'tweet', tweetId[0])
 
   return (
     <div
