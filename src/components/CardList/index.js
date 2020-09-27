@@ -5,7 +5,7 @@ import axios from 'axios'
 import Card from '../Card'
 import './CardList.scss'
 
-export const List = ({ cardSlug, cardData, match }) => {
+export const List = ({ cardData, match }) => {
   return cardData?.map((card) => {
     const displayCardId = card.id + 1
     const displayCardCity = card.City.replace(/\s+/g, '-')
@@ -107,7 +107,7 @@ export default ({ cardSlug, match }) => {
           next&gt;
         </button>
         <div className="collection-list w-dyn-items">
-          <List cardSlug={cardSlug} cardData={cardData} match={match} />
+          <List cardData={cardData} match={match} />
         </div>
 
         {!cardData && (
