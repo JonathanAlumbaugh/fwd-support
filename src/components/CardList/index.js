@@ -1,26 +1,26 @@
 import React, { useState, useEffect } from 'react'
-import { Link, history, useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import axios from 'axios'
 
 import Card from '../Card'
 import './CardList.scss'
 
-export const List = ({ cardId, cardData, history }) => {
+export const List = ({ cardId, cardData, match }) => {
   return cardData?.map((card) => {
     return (
       <Card
         key={card.id}
         isSelected={
-          cardId === `${card['TGD Number']}-${card.State}-${card.City}`
+          match.params.cardId === `${card.id}-${card.State}-${card.City}`
         }
-        history={history}
+        match={match}
         {...card}
       />
     )
   })
 }
 
-export default ({ cardId, history }) => {
+export default ({ cardId, match }) => {
   const location = useLocation()
 
   const [cardData, setCardData] = useState([])
@@ -101,7 +101,7 @@ export default ({ cardId, history }) => {
           next&gt;
         </button>
         <div className="collection-list w-dyn-items">
-          <List cardId={cardId} cardData={cardData} history={history} />
+          <List cardId={cardId} cardData={cardData} match={match} />
         </div>
 
         {!cardData && (

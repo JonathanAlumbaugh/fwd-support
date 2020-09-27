@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 
 import './Card.scss'
 
-function Card({ isSelected, history, ...card }) {
+function Card({ isSelected, match, ...card }) {
   // console.log(card)
   const [missingMedia, setMissingMedia] = useState(false)
   const tweetId = card['Tweet URL'].match(/[^/]*$/)
