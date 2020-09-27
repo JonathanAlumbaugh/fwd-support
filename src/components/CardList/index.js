@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { Link, history, useLocation } from 'react-router-dom'
 import axios from 'axios'
 
 import Card from '../Card'
@@ -20,12 +21,16 @@ export const List = ({ cardId, cardData, history }) => {
 }
 
 export default ({ cardId, history }) => {
+  const location = useLocation()
+
   const [cardData, setCardData] = useState([])
   const filter = ''
   const [pageNumber, setPageNumber] = useState(1)
   const [itemLimit, setItemLimit] = useState(20)
   const [totalItems, setTotalItems] = useState()
   const [totalPages, setTotalPages] = useState()
+
+  // console.log('page', pageId, cardId)
 
   useEffect(() => {
     function fetchApi() {
@@ -43,6 +48,11 @@ export default ({ cardId, history }) => {
             let totalPagesLoc = parseInt(totalPagesVar, 10)
             setTotalPages(totalPagesLoc)
 
+            if (location.pageId) {
+              setPageNumber(location.pageId)
+            }
+            console.log('updated page', location.pageId)
+
             res = res.data
             setCardData([...res])
           })
@@ -52,28 +62,32 @@ export default ({ cardId, history }) => {
     }
 
     fetchApi()
-  }, [pageNumber, itemLimit, totalItems])
+  }, [pageNumber, itemLimit, totalItems, location.pageId])
 
   return (
     <div className="police-brutality">
       <div className="collection-list-wrapper w-dyn-list">
         <button
           onClick={() => {
-            pageNumber >= 1 ? setPageNumber(pageNumber - 1) : setPageNumber(1)
+            pageNumber > 1 ? setPageNumber(pageNumber - 1) : setPageNumber(1)
           }}
         >
           &lt;prev
         </button>
         {Array.apply(null, { length: totalPages }).map((p, i) => {
           return (
-            <button
+            <Link
+              to={{
+                pathname: `/${i + 1}`,
+                pageId: `${i + 1}`,
+              }}
               key={i}
               onClick={() => {
-                setPageNumber(i)
+                setPageNumber(i + 1)
               }}
             >
-              {i}
-            </button>
+              {i + 1}
+            </Link>
           )
         })}
         <button

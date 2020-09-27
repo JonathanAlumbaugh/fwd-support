@@ -99,7 +99,9 @@ function Card({ isSelected, history, ...card }) {
           {!isSelected && (
             <Link
               className="card-open-link"
-              to={`${card['TGD Number']}-${card.State}-${card.City}`}
+              to={{
+                cardId: `${card['TGD Number']}-${card.State}-${card.City}`,
+              }}
             />
           )}
         </div>
