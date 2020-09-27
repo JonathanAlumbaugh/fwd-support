@@ -14,6 +14,8 @@ function Card({ isSelected, match, ...card }) {
   const containerRef = createRef(null)
   const videoRef = createRef(null)
 
+  const cardId = card.id + 1
+
   // Pauses video on close, and prevents media keys from playing it while closed
   if (!isSelected) {
     videoRef.current && videoRef.current.pause()
@@ -100,7 +102,8 @@ function Card({ isSelected, match, ...card }) {
             <Link
               className="card-open-link"
               to={{
-                cardId: `${card['TGD Number']}-${card.State}-${card.City}`,
+                pathname: `${card.id}-${card.State}-${card.City}`,
+                cardId: `${card.id}-${card.State}-${card.City}`,
               }}
             />
           )}
