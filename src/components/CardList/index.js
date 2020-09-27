@@ -32,6 +32,10 @@ export default ({ cardId, history }) => {
 
   // console.log('page', pageId, cardId)
 
+  // For any given item, page = Math.round(item.id / itemsPerPage).
+  // This might not work out when pulling data from other sources,
+  // if the IDs of the combined set are not sequential or unique.
+
   useEffect(() => {
     function fetchApi() {
       try {
@@ -77,10 +81,7 @@ export default ({ cardId, history }) => {
         {Array.apply(null, { length: totalPages }).map((p, i) => {
           return (
             <Link
-              to={{
-                pathname: `/${i + 1}`,
-                pageId: `${i + 1}`,
-              }}
+              to={{ pathname: '/', pageId: `${i + 1}` }}
               key={i}
               onClick={() => {
                 setPageNumber(i + 1)

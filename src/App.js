@@ -18,7 +18,7 @@ function App() {
           <Route name="Why" path="/why" component={WhyContainer} exact />
           <Route
             name="Home"
-            path={['/:pageId/:cardId?', '/']}
+            path={['/:cardId', '/']}
             component={HomeContainer}
           />
         </Switch>
