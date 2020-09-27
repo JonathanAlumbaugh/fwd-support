@@ -6,15 +6,13 @@ import { Link } from 'react-router-dom'
 
 import './Card.scss'
 
-function Card({ isSelected, match, ...card }) {
+function Card({ isSelected, displayCardId, match, ...card }) {
   // console.log(card)
   const [missingMedia, setMissingMedia] = useState(false)
   const tweetId = card['Tweet URL'].match(/[^/]*$/)
 
   const containerRef = createRef(null)
   const videoRef = createRef(null)
-
-  const cardId = card.id + 1
 
   // Pauses video on close, and prevents media keys from playing it while closed
   if (!isSelected) {
@@ -39,7 +37,7 @@ function Card({ isSelected, match, ...card }) {
     >
       {/* <Overlay isSelected={isSelected} /> */}
       <div className="item-container">
-        <h2 className="item-number">{card.id + 1}</h2>
+        <h2 className="item-number">{displayCardId}</h2>
         <div className="item-link">
           <div className="content-wrapper">
             <div className="double-title-wrapper">
@@ -102,8 +100,8 @@ function Card({ isSelected, match, ...card }) {
             <Link
               className="card-open-link"
               to={{
-                pathname: `${card.id}-${card.State}-${card.City}`,
-                cardId: `${card.id}-${card.State}-${card.City}`,
+                pathname: `${displayCardId}-${card.State}-${card.City}`,
+                cardId: `${displayCardId}-${card.State}-${card.City}`,
               }}
             />
           )}
