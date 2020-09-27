@@ -8,14 +8,17 @@ import './CardList.scss'
 export const List = ({ cardId, cardData, match }) => {
   return cardData?.map((card) => {
     const displayCardId = card.id + 1
+    const displayCardCity = card.City.replace(/\s+/g, '-')
 
     return (
       <Card
         key={card.id}
         isSelected={
-          match.params.cardId === `${displayCardId}-${card.State}-${card.City}`
+          match.params.cardId ===
+          `${displayCardId}-${card.State}-${displayCardCity}`
         }
         displayCardId={displayCardId}
+        displayCardCity={displayCardCity}
         match={match}
         {...card}
       />

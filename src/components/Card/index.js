@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 
 import './Card.scss'
 
-function Card({ isSelected, displayCardId, match, ...card }) {
+function Card({ isSelected, displayCardId, displayCardCity, match, ...card }) {
   // console.log(card)
   const [missingMedia, setMissingMedia] = useState(false)
   const tweetId = card['Tweet URL'].match(/[^/]*$/)
@@ -100,8 +100,8 @@ function Card({ isSelected, displayCardId, match, ...card }) {
             <Link
               className="card-open-link"
               to={{
-                pathname: `${displayCardId}-${card.State}-${card.City}`,
-                cardId: `${displayCardId}-${card.State}-${card.City}`,
+                pathname: `${displayCardId}-${card.State}-${displayCardCity}`,
+                cardId: `${displayCardId}-${card.State}-${displayCardCity}`,
               }}
             />
           )}
