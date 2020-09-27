@@ -5,7 +5,7 @@ import axios from 'axios'
 import Card from '../Card'
 import './CardList.scss'
 
-export const List = ({ cardId, cardData, match }) => {
+export const List = ({ cardSlug, cardData, match }) => {
   return cardData?.map((card) => {
     const displayCardId = card.id + 1
     const displayCardCity = card.City.replace(/\s+/g, '-')
@@ -14,7 +14,7 @@ export const List = ({ cardId, cardData, match }) => {
       <Card
         key={card.id}
         isSelected={
-          match.params.cardId ===
+          match.params.cardSlug ===
           `${displayCardId}-${card.State}-${displayCardCity}`
         }
         displayCardId={displayCardId}
@@ -26,7 +26,7 @@ export const List = ({ cardId, cardData, match }) => {
   })
 }
 
-export default ({ cardId, match }) => {
+export default ({ cardSlug, match }) => {
   const location = useLocation()
 
   const [cardData, setCardData] = useState([])
@@ -107,7 +107,7 @@ export default ({ cardId, match }) => {
           next&gt;
         </button>
         <div className="collection-list w-dyn-items">
-          <List cardId={cardId} cardData={cardData} match={match} />
+          <List cardSlug={cardSlug} cardData={cardData} match={match} />
         </div>
 
         {!cardData && (

@@ -9,7 +9,7 @@ function HomeContainer({ match }) {
     <div className="main-container w-container">
       <Featured />
       <Filters />
-      <CardList cardId={match.params.cardId} match={match} />
+      <CardList cardSlug={match.params.cardSlug} match={match} />
     </div>
   )
 }

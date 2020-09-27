@@ -101,7 +101,7 @@ function Card({ isSelected, displayCardId, displayCardCity, match, ...card }) {
               className="card-open-link"
               to={{
                 pathname: `${displayCardId}-${card.State}-${displayCardCity}`,
-                cardId: `${displayCardId}-${card.State}-${displayCardCity}`,
+                cardSlug: `${displayCardId}-${card.State}-${displayCardCity}`,
               }}
             />
           )}
