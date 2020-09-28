@@ -11,17 +11,17 @@ export const List = ({ cardData, match }) => {
 
     const displayCardId = card.id + 1
     const displayCardCity = card.City.replace(/\s+/g, '-')
+    const isSelected =
+      match.params.cardSlug ===
+      `${displayCardId}-${card.State}-${displayCardCity}`
 
     return (
       <Card
         ref={ref}
         key={card.id}
-        isSelected={
-          match.params.cardSlug ===
-          `${displayCardId}-${card.State}-${displayCardCity}`
-        }
         displayCardId={displayCardId}
         displayCardCity={displayCardCity}
+        isSelected={isSelected}
         match={match}
         card={card}
       />
