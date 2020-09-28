@@ -43,22 +43,13 @@ export default ({ match }) => {
       try {
         let apiOptions = `${filter}_page=${pageNumber}&_limit=${itemLimit}`
 
-        // For any given item, if itemId / itemLimit is an integer, then
-        // page should be set to itemId / itemLimit. Otherwise page should be
-        // set to Math.round(item.id / itemLimit) + 1.
-
-        // This won't work out when pulling data from other sources,
-        // since IDs of the combined set won't be sequential or unique.
+        // For any given item, the itemPageNumber is the rounded up
+        // itemId / itemLimit. This won't work out when pulling data
+        // from other sources, since IDs of the combined set won't
+        // be sequential or unique.
         if (match.params.cardSlug) {
           const itemId = match.params.cardSlug.match(/\d+/)[0]
-          const approxPage = itemId / itemLimit
-          let itemPageNumber
-
-          if (Number.isInteger(approxPage)) {
-            itemPageNumber = itemId / itemLimit
-          } else {
-            itemPageNumber = Math.round(itemId / itemLimit) + 1
-          }
+          const itemPageNumber = Math.ceil(itemId / itemLimit)
 
           setPageNumber(itemPageNumber)
 
