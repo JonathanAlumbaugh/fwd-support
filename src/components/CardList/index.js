@@ -130,12 +130,7 @@ export default ({ match }) => {
           next&gt;
         </button>
         <div className="collection-list w-dyn-items">
-          <List
-            setItemPage={setItemPage}
-            itemLimit={itemLimit}
-            cardData={cardData}
-            match={match}
-          />
+          <List cardData={cardData} match={match} />
         </div>
 
         {!cardData && (
