@@ -5,10 +5,28 @@ import axios from 'axios'
 import Card from '../Card'
 import './CardList.scss'
 
-export const List = ({ cardData, match }) => {
+export const List = ({ setItemPage, itemLimit, cardData, match }) => {
   return cardData?.map((card) => {
     const displayCardId = card.id + 1
     const displayCardCity = card.City.replace(/\s+/g, '-')
+
+    // For any given item, itemPage = Math.round(item.id / itemLimit).
+    // This might not work out when pulling data from other sources,
+    // if the IDs of the combined set are not sequential or unique.
+    if (match.params.cardSlug) {
+      const itemId = match.params.cardSlug.match(/\d+/)[0]
+      const approxPage = itemId / itemLimit
+      let itemPage
+
+      if (Number.isInteger(approxPage)) {
+        itemPage = itemId / itemLimit
+      } else {
+        itemPage = Math.round(itemId / itemLimit) + 1
+      }
+
+      console.log('page', itemPage)
+      setItemPage(itemPage)
+    }
 
     return (
       <Card
@@ -26,7 +44,7 @@ export const List = ({ cardData, match }) => {
   })
 }
 
-export default ({ cardSlug, match }) => {
+export default ({ match }) => {
   const location = useLocation()
 
   const [cardData, setCardData] = useState([])
@@ -35,44 +53,49 @@ export default ({ cardSlug, match }) => {
   const [itemLimit, setItemLimit] = useState(20)
   const [totalItems, setTotalItems] = useState()
   const [totalPages, setTotalPages] = useState()
+  const [itemPage, setItemPage] = useState()
 
   // console.log('page', pageId, cardId)
-
-  // For any given item, page = Math.round(item.id / itemsPerPage).
-  // This might not work out when pulling data from other sources,
-  // if the IDs of the combined set are not sequential or unique.
 
   useEffect(() => {
     function fetchApi() {
       try {
-        axios
-          .get(
-            `https://api.fwd.support/items?${filter}_page=${pageNumber}&_limit=${itemLimit}`,
-          )
-          .then((res) => {
-            let headers = res.headers
-            let total = parseInt(headers['x-total-count'], 10)
-            setTotalItems(total)
+        let apiOptions = `${filter}_page=${pageNumber}&_limit=${itemLimit}`
 
-            let totalPagesVar = Math.round(totalItems / itemLimit)
-            let totalPagesLoc = parseInt(totalPagesVar, 10)
-            setTotalPages(totalPagesLoc)
+        if (match.params.cardSlug) {
+          apiOptions = `_page=${pageNumber}&_limit=${itemLimit}`
+        }
 
-            if (location.pageId) {
-              setPageNumber(location.pageId)
-            }
-            console.log('updated page', location.pageId)
+        axios.get(`https://api.fwd.support/items?${apiOptions}`).then((res) => {
+          let headers = res.headers
+          let total = parseInt(headers['x-total-count'], 10)
+          setTotalItems(total)
 
-            res = res.data
-            setCardData([...res])
-          })
+          let totalPagesVar = Math.round(totalItems / itemLimit)
+          let totalPagesLoc = parseInt(totalPagesVar, 10)
+          setTotalPages(totalPagesLoc)
+
+          if (location.pageId) {
+            setPageNumber(location.pageId)
+          }
+
+          res = res.data
+          setCardData([...res])
+        })
       } catch (e) {
         console.log('error', e)
       }
     }
 
     fetchApi()
-  }, [pageNumber, itemLimit, totalItems, location.pageId])
+  }, [
+    filter,
+    pageNumber,
+    itemLimit,
+    totalItems,
+    location.pageId,
+    match.params.cardSlug,
+  ])
 
   return (
     <div className="police-brutality">
@@ -92,6 +115,7 @@ export default ({ cardSlug, match }) => {
               onClick={() => {
                 setPageNumber(i + 1)
               }}
+              style={{ margin: '0.2em' }}
             >
               {i + 1}
             </Link>
@@ -107,7 +131,12 @@ export default ({ cardSlug, match }) => {
           next&gt;
         </button>
         <div className="collection-list w-dyn-items">
-          <List cardData={cardData} match={match} />
+          <List
+            setItemPage={setItemPage}
+            itemLimit={itemLimit}
+            cardData={cardData}
+            match={match}
+          />
         </div>
 
         {!cardData && (
