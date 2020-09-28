@@ -31,8 +31,7 @@ function App() {
           />
           <Route
             name="Home"
-            key="home"
-            path={['/:cardId', '/']}
+            path={['/:cardSlug', '/']}
             component={HomeContainer}
           />
         </Switch>
