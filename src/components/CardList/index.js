@@ -6,27 +6,30 @@ import Card from '../Card'
 import './CardList.scss'
 
 export const List = ({ setItemPage, itemLimit, cardData, match }) => {
+  // For any given item, if itemId / itemLimit is an integer, then
+  // page should be set to itemId / itemLimit. Otherwise page should be
+  // set to Math.round(item.id / itemLimit) + 1.
+
+  // This won't work out when pulling data from other sources,
+  // since IDs of the combined set won't be sequential or unique.
+  if (match.params.cardSlug) {
+    const itemId = match.params.cardSlug.match(/\d+/)[0]
+    const approxPage = itemId / itemLimit
+    let itemPage
+
+    if (Number.isInteger(approxPage)) {
+      itemPage = itemId / itemLimit
+    } else {
+      itemPage = Math.round(itemId / itemLimit) + 1
+    }
+
+    console.log('page', itemPage)
+    setItemPage(itemPage)
+  }
+
   return cardData?.map((card) => {
     const displayCardId = card.id + 1
     const displayCardCity = card.City.replace(/\s+/g, '-')
-
-    // For any given item, itemPage = Math.round(item.id / itemLimit).
-    // This might not work out when pulling data from other sources,
-    // if the IDs of the combined set are not sequential or unique.
-    if (match.params.cardSlug) {
-      const itemId = match.params.cardSlug.match(/\d+/)[0]
-      const approxPage = itemId / itemLimit
-      let itemPage
-
-      if (Number.isInteger(approxPage)) {
-        itemPage = itemId / itemLimit
-      } else {
-        itemPage = Math.round(itemId / itemLimit) + 1
-      }
-
-      console.log('page', itemPage)
-      setItemPage(itemPage)
-    }
 
     return (
       <Card
