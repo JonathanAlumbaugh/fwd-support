@@ -1,4 +1,4 @@
-import React, { useState, createRef } from 'react'
+import React, { useState, forwardRef, createRef, useEffect } from 'react'
 import Linkify from 'react-linkify'
 import { Tweet } from 'react-twitter-widgets'
 import { motion, AnimatePresence, AnimateSharedLayout } from 'framer-motion'
@@ -6,12 +6,13 @@ import { Link } from 'react-router-dom'
 
 import './Card.scss'
 
-function Card({ isSelected, displayCardId, displayCardCity, match, ...card }) {
-  // console.log(card)
+export default forwardRef((props, ref) => {
+  const { displayCardId, displayCardCity, isSelected, card } = props
+
   const [missingMedia, setMissingMedia] = useState(false)
   const tweetId = card['Tweet URL'].match(/[^/]*$/)
 
-  const containerRef = createRef(null)
+  // const containerRef = createRef(null)
   const videoRef = createRef(null)
 
   // Pauses video on close, and prevents media keys from playing it while closed
@@ -30,11 +31,7 @@ function Card({ isSelected, displayCardId, displayCardCity, match, ...card }) {
   // console.log('media', missingMedia, 'tweet', tweetId[0])
 
   return (
-    <div
-      className="collection-item w-dyn-item"
-      role="listitem"
-      ref={containerRef}
-    >
+    <div className="collection-item w-dyn-item" role="listitem" ref={ref}>
       {/* <Overlay isSelected={isSelected} /> */}
       <div className="item-container">
         <h2 className="item-number">{displayCardId}</h2>
@@ -109,9 +106,7 @@ function Card({ isSelected, displayCardId, displayCardCity, match, ...card }) {
       </div>
     </div>
   )
-}
-
-export default Card
+})
 
 const Overlay = ({ isSelected }) => (
   <motion.div

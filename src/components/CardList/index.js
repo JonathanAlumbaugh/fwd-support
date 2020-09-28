@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, createRef } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import axios from 'axios'
 
@@ -7,11 +7,14 @@ import './CardList.scss'
 
 export const List = ({ cardData, match }) => {
   return cardData?.map((card) => {
+    const ref = createRef()
+
     const displayCardId = card.id + 1
     const displayCardCity = card.City.replace(/\s+/g, '-')
 
     return (
       <Card
+        ref={ref}
         key={card.id}
         isSelected={
           match.params.cardSlug ===
@@ -20,7 +23,7 @@ export const List = ({ cardData, match }) => {
         displayCardId={displayCardId}
         displayCardCity={displayCardCity}
         match={match}
-        {...card}
+        card={card}
       />
     )
   })
