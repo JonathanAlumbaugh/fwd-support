@@ -8,7 +8,8 @@ import './CardList.scss'
 export const List = ({ cardData, match }) => {
   const scrollToRef = async (ref) => {
     const { current } = await ref
-    window.scrollTo(0, current.offsetTop)
+    if (current)
+      window.scrollTo({ left: 0, top: current.offsetTop, behavior: 'smooth' })
   }
 
   return cardData?.map((card) => {
