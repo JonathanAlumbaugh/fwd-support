@@ -88,7 +88,7 @@ export default forwardRef((props, ref) => {
             <div className="tweet-wrapper">
               <Tweet
                 tweetId={tweetId[0]}
-                onLoad={console.log(tweetId)}
+                // onLoad={console.log(tweetId)}
                 renderError={(_err) => <p>Could not load tweet</p>}
               />
             </div>
