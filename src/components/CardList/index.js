@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, createRef } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import axios from 'axios'
 
@@ -6,21 +6,34 @@ import Card from '../Card'
 import './CardList.scss'
 
 export const List = ({ cardData, match }) => {
+  const scrollToRef = async (ref) => {
+    const { current } = await ref
+    if (current)
+      window.scrollTo({ left: 0, top: current.offsetTop, behavior: 'smooth' })
+  }
+
   return cardData?.map((card) => {
+    const ref = createRef()
+
     const displayCardId = card.id + 1
     const displayCardCity = card.City.replace(/\s+/g, '-')
+    const isSelected =
+      match.params.cardSlug ===
+      `${displayCardId}-${card.State}-${displayCardCity}`
+
+    if (isSelected) {
+      scrollToRef(ref)
+    }
 
     return (
       <Card
+        ref={ref}
         key={card.id}
-        isSelected={
-          match.params.cardSlug ===
-          `${displayCardId}-${card.State}-${displayCardCity}`
-        }
         displayCardId={displayCardId}
         displayCardCity={displayCardCity}
+        isSelected={isSelected}
         match={match}
-        {...card}
+        card={card}
       />
     )
   })
