@@ -5,28 +5,7 @@ import axios from 'axios'
 import Card from '../Card'
 import './CardList.scss'
 
-export const List = ({ setItemPage, itemLimit, cardData, match }) => {
-  // For any given item, if itemId / itemLimit is an integer, then
-  // page should be set to itemId / itemLimit. Otherwise page should be
-  // set to Math.round(item.id / itemLimit) + 1.
-
-  // This won't work out when pulling data from other sources,
-  // since IDs of the combined set won't be sequential or unique.
-  if (match.params.cardSlug) {
-    const itemId = match.params.cardSlug.match(/\d+/)[0]
-    const approxPage = itemId / itemLimit
-    let itemPage
-
-    if (Number.isInteger(approxPage)) {
-      itemPage = itemId / itemLimit
-    } else {
-      itemPage = Math.round(itemId / itemLimit) + 1
-    }
-
-    console.log('page', itemPage)
-    setItemPage(itemPage)
-  }
-
+export const List = ({ cardData, match }) => {
   return cardData?.map((card) => {
     const displayCardId = card.id + 1
     const displayCardCity = card.City.replace(/\s+/g, '-')
@@ -65,8 +44,26 @@ export default ({ match }) => {
       try {
         let apiOptions = `${filter}_page=${pageNumber}&_limit=${itemLimit}`
 
+        // For any given item, if itemId / itemLimit is an integer, then
+        // page should be set to itemId / itemLimit. Otherwise page should be
+        // set to Math.round(item.id / itemLimit) + 1.
+
+        // This won't work out when pulling data from other sources,
+        // since IDs of the combined set won't be sequential or unique.
         if (match.params.cardSlug) {
-          apiOptions = `_page=${pageNumber}&_limit=${itemLimit}`
+          const itemId = match.params.cardSlug.match(/\d+/)[0]
+          const approxPage = itemId / itemLimit
+          let itemPage
+
+          if (Number.isInteger(approxPage)) {
+            itemPage = itemId / itemLimit
+          } else {
+            itemPage = Math.round(itemId / itemLimit) + 1
+          }
+
+          setItemPage(itemPage)
+
+          apiOptions = `_page=${itemPage}&_limit=${itemLimit}`
         }
 
         axios.get(`https://api.fwd.support/items?${apiOptions}`).then((res) => {
