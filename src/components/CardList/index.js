@@ -6,6 +6,11 @@ import Card from '../Card'
 import './CardList.scss'
 
 export const List = ({ cardData, match }) => {
+  const scrollToRef = async (ref) => {
+    const { current } = await ref
+    window.scrollTo(0, current.offsetTop)
+  }
+
   return cardData?.map((card) => {
     const ref = createRef()
 
@@ -14,6 +19,10 @@ export const List = ({ cardData, match }) => {
     const isSelected =
       match.params.cardSlug ===
       `${displayCardId}-${card.State}-${displayCardCity}`
+
+    if (isSelected) {
+      scrollToRef(ref)
+    }
 
     return (
       <Card
