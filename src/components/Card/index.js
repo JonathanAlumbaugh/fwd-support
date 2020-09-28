@@ -10,6 +10,7 @@ export default forwardRef((props, ref) => {
   const { displayCardId, displayCardCity, isSelected, card } = props
 
   const [missingMedia, setMissingMedia] = useState(false)
+  const itemSlug = `${displayCardId}-${card.State}-${displayCardCity}`
   const tweetId = card['Tweet URL'].match(/[^/]*$/)
 
   // const containerRef = createRef(null)
@@ -97,8 +98,8 @@ export default forwardRef((props, ref) => {
             <Link
               className="card-open-link"
               to={{
-                pathname: `${displayCardId}-${card.State}-${displayCardCity}`,
-                cardSlug: `${displayCardId}-${card.State}-${displayCardCity}`,
+                pathname: itemSlug,
+                cardSlug: itemSlug,
               }}
             />
           )}
