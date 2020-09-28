@@ -35,7 +35,6 @@ export default ({ match }) => {
   const [itemLimit, setItemLimit] = useState(20)
   const [totalItems, setTotalItems] = useState()
   const [totalPages, setTotalPages] = useState()
-  const [itemPage, setItemPage] = useState()
 
   // console.log('page', pageId, cardId)
 
@@ -53,17 +52,17 @@ export default ({ match }) => {
         if (match.params.cardSlug) {
           const itemId = match.params.cardSlug.match(/\d+/)[0]
           const approxPage = itemId / itemLimit
-          let itemPage
+          let itemPageNumber
 
           if (Number.isInteger(approxPage)) {
-            itemPage = itemId / itemLimit
+            itemPageNumber = itemId / itemLimit
           } else {
-            itemPage = Math.round(itemId / itemLimit) + 1
+            itemPageNumber = Math.round(itemId / itemLimit) + 1
           }
 
-          setItemPage(itemPage)
+          setPageNumber(itemPageNumber)
 
-          apiOptions = `_page=${itemPage}&_limit=${itemLimit}`
+          apiOptions = `_page=${pageNumber}&_limit=${itemLimit}`
         }
 
         axios.get(`https://api.fwd.support/items?${apiOptions}`).then((res) => {
