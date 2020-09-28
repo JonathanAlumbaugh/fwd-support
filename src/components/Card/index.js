@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 
 import './Card.scss'
 
-function Card({ isSelected, history, ...card }) {
+function Card({ isSelected, displayCardId, displayCardCity, match, ...card }) {
   // console.log(card)
   const [missingMedia, setMissingMedia] = useState(false)
   const tweetId = card['Tweet URL'].match(/[^/]*$/)
@@ -27,7 +27,7 @@ function Card({ isSelected, history, ...card }) {
 
   // console.log('isselected', isSelected)
   // console.log('missing media', missingMedia)
-  console.log('media', missingMedia, 'tweet', tweetId[0])
+  // console.log('media', missingMedia, 'tweet', tweetId[0])
 
   return (
     <div
@@ -37,7 +37,7 @@ function Card({ isSelected, history, ...card }) {
     >
       {/* <Overlay isSelected={isSelected} /> */}
       <div className="item-container">
-        <h2 className="item-number">{card.id + 1}</h2>
+        <h2 className="item-number">{displayCardId}</h2>
         <div className="item-link">
           <div className="content-wrapper">
             <div className="double-title-wrapper">
@@ -99,7 +99,10 @@ function Card({ isSelected, history, ...card }) {
           {!isSelected && (
             <Link
               className="card-open-link"
-              to={`${card['TGD Number']}-${card.State}-${card.City}`}
+              to={{
+                pathname: `${displayCardId}-${card.State}-${displayCardCity}`,
+                cardSlug: `${displayCardId}-${card.State}-${displayCardCity}`,
+              }}
             />
           )}
         </div>
