@@ -32,12 +32,16 @@ export default forwardRef((props, ref) => {
   // console.log('media', missingMedia, 'tweet', tweetId[0])
 
   return (
-    <div className="collection-item w-dyn-item" role="listitem" ref={ref}>
+    <div
+      className={`collection-item${isSelected ? ' open' : null}`}
+      role="listitem"
+      ref={ref}
+    >
       {/* <Overlay isSelected={isSelected} /> */}
       <div className="item-container">
         <h2 className="item-number">{displayCardId}</h2>
-        <div className="item-link">
-          <div className="content-wrapper">
+        <div className={`item-link${isSelected ? ' is-selected' : ''}`}>
+          <motion.div layout className="content-wrapper">
             <div className="double-title-wrapper">
               <div className="title-wrapper">
                 <h2 className="state">{card.State}</h2>
@@ -46,22 +50,16 @@ export default forwardRef((props, ref) => {
               </div>
             </div>
 
-            <p className="description">
-              {card['Doucette Text'].slice(0, 100)}
-
-              {!isSelected ? (
-                card['Doucette Text'].length > 100 ? (
-                  '...'
-                ) : (
-                  ''
-                )
-              ) : (
-                <Linkify onClick={(e) => e.stopPropagation()}>
-                  {card['Doucette Text'].slice(100)}
-                </Linkify>
-              )}
-            </p>
-          </div>
+            <motion.p layout className="description">
+              <AnimatePresence>
+                {isSelected && (
+                  <Linkify onClick={(e) => e.stopPropagation()}>
+                    {card['Doucette Text']}
+                  </Linkify>
+                )}
+              </AnimatePresence>
+            </motion.p>
+          </motion.div>
 
           <div className="video-wrapper">
             {/* <img
@@ -84,7 +82,7 @@ export default forwardRef((props, ref) => {
             </video>
           </div>
 
-          {isSelected && (
+          {/* {isSelected && (
             <div className="tweet-wrapper">
               <Tweet
                 tweetId={tweetId[0]}
@@ -92,7 +90,7 @@ export default forwardRef((props, ref) => {
                 renderError={(_err) => <p>Could not load tweet</p>}
               />
             </div>
-          )}
+          )} */}
 
           {!isSelected && (
             <Link

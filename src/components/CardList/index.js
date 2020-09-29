@@ -1,5 +1,6 @@
 import React, { useState, useEffect, createRef } from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import { motion, AnimateSharedLayout } from 'framer-motion'
 import axios from 'axios'
 
 import Card from '../Card'
@@ -12,31 +13,37 @@ export const List = ({ cardData, match }) => {
       window.scrollTo({ left: 0, top: current.offsetTop, behavior: 'smooth' })
   }
 
-  return cardData?.map((card) => {
-    const ref = createRef()
+  return (
+    <AnimateSharedLayout>
+      <motion.div layout>
+        {cardData?.map((card) => {
+          const ref = createRef()
 
-    const displayCardId = card.id + 1
-    const displayCardCity = card.City.replace(/\s+/g, '-')
-    const isSelected =
-      match.params.cardSlug ===
-      `${displayCardId}-${card.State}-${displayCardCity}`
+          const displayCardId = card.id + 1
+          const displayCardCity = card.City.replace(/\s+/g, '-')
+          const isSelected =
+            match.params.cardSlug ===
+            `${displayCardId}-${card.State}-${displayCardCity}`
 
-    if (isSelected) {
-      scrollToRef(ref)
-    }
+          if (isSelected) {
+            scrollToRef(ref)
+          }
 
-    return (
-      <Card
-        ref={ref}
-        key={card.id}
-        displayCardId={displayCardId}
-        displayCardCity={displayCardCity}
-        isSelected={isSelected}
-        match={match}
-        card={card}
-      />
-    )
-  })
+          return (
+            <Card
+              ref={ref}
+              key={card.id}
+              displayCardId={displayCardId}
+              displayCardCity={displayCardCity}
+              isSelected={isSelected}
+              match={match}
+              card={card}
+            />
+          )
+        })}
+      </motion.div>
+    </AnimateSharedLayout>
+  )
 }
 
 export default ({ match }) => {
