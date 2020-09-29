@@ -32,11 +32,15 @@ export default forwardRef((props, ref) => {
   // console.log('media', missingMedia, 'tweet', tweetId[0])
 
   return (
-    <div className="collection-item w-dyn-item" role="listitem" ref={ref}>
+    <div
+      className={`collection-item${isSelected ? ' open' : null}`}
+      role="listitem"
+      ref={ref}
+    >
       {/* <Overlay isSelected={isSelected} /> */}
       <div className="item-container">
         <h2 className="item-number">{displayCardId}</h2>
-        <div className="item-link">
+        <div className={`item-link${isSelected ? ' is-selected' : ''}`}>
           <div className="content-wrapper">
             <div className="double-title-wrapper">
               <div className="title-wrapper">
@@ -84,7 +88,7 @@ export default forwardRef((props, ref) => {
             </video>
           </div>
 
-          {isSelected && (
+          {/* {isSelected && (
             <div className="tweet-wrapper">
               <Tweet
                 tweetId={tweetId[0]}
@@ -92,7 +96,7 @@ export default forwardRef((props, ref) => {
                 renderError={(_err) => <p>Could not load tweet</p>}
               />
             </div>
-          )}
+          )} */}
 
           {!isSelected && (
             <Link
