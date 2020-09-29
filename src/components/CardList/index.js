@@ -1,5 +1,5 @@
-import React, { useState, useEffect, createRef } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import React, { useState, useEffect, createRef, useCallback } from 'react'
+import { Link, useHistory, useLocation } from 'react-router-dom'
 import { motion, AnimateSharedLayout } from 'framer-motion'
 import axios from 'axios'
 
@@ -50,6 +50,7 @@ export const List = ({ cardData, match }) => {
 
 export default ({ match }) => {
   const location = useLocation()
+  const history = useHistory()
 
   const [cardData, setCardData] = useState([])
   const filter = ''
@@ -57,6 +58,18 @@ export default ({ match }) => {
   const [itemLimit, setItemLimit] = useState(20)
   const [totalItems, setTotalItems] = useState()
   const [totalPages, setTotalPages] = useState()
+
+  const prevPage = useCallback(() => {
+    history.push({ pathname: '/', state: { pageId: pageNumber } })
+    pageNumber > 1 ? setPageNumber(pageNumber - 1) : setPageNumber(1)
+  }, [history, pageNumber])
+
+  const nextPage = useCallback(() => {
+    history.push({ pathname: '/', state: { pageId: pageNumber } })
+    pageNumber < totalPages
+      ? setPageNumber(pageNumber + 1)
+      : setPageNumber(totalPages)
+  }, [history, pageNumber, totalPages])
 
   // console.log('page', pageId, cardId)
 
@@ -112,17 +125,17 @@ export default ({ match }) => {
   return (
     <div className="police-brutality">
       <div className="collection-list-wrapper w-dyn-list">
-        <button
-          onClick={() => {
-            pageNumber > 1 ? setPageNumber(pageNumber - 1) : setPageNumber(1)
-          }}
-        >
-          &lt;prev
-        </button>
+        <button onClick={() => prevPage()}>&lt;prev</button>
+
         {Array.apply(null, { length: totalPages }).map((p, i) => {
           return (
             <Link
-              to={{ pathname: '/', pageId: `${i + 1}` }}
+              to={{
+                pathname: '/',
+                pageId: `${i + 1}`,
+                cardId: null,
+                state: { pageId: pageNumber },
+              }}
               key={i}
               onClick={() => {
                 setPageNumber(i + 1)
@@ -133,15 +146,9 @@ export default ({ match }) => {
             </Link>
           )
         })}
-        <button
-          onClick={() => {
-            pageNumber < totalPages
-              ? setPageNumber(pageNumber + 1)
-              : setPageNumber(totalPages)
-          }}
-        >
-          next&gt;
-        </button>
+
+        <button onClick={() => nextPage()}>next&gt;</button>
+
         <div className="collection-list w-dyn-items">
           <List cardData={cardData} match={match} />
         </div>
