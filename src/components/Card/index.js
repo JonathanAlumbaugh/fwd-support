@@ -32,55 +32,84 @@ export default forwardRef((props, ref) => {
   // console.log('media', missingMedia, 'tweet', tweetId[0])
 
   return (
-    <div
-      className={`collection-item${isSelected ? ' open' : ''}`}
+    <motion.div
+      layout
+      className="collection-item"
       role="listitem"
       ref={ref}
+      data-is-selected={isSelected}
     >
       {/* <Overlay isSelected={isSelected} /> */}
-      <div className="item-container">
-        <h2 className="item-number">{displayCardId}</h2>
-        <div className={`item-link${isSelected ? ' is-selected' : ''}`}>
-          <motion.div layout className="content-wrapper">
-            <div className="double-title-wrapper">
+      <motion.div layout className="item-container">
+        <motion.h2 layout className="item-number">
+          {displayCardId}
+        </motion.h2>
+        <motion.div
+          className="item-link"
+          data-is-selected={isSelected}
+          initial={{ y: 100 }}
+          animate={{ y: 0 }}
+        >
+          <motion.div
+            layout
+            className="content-wrapper"
+            data-is-selected={isSelected}
+          >
+            <motion.div layout className="double-title-wrapper">
               <div className="title-wrapper">
-                <h2 className="state">{card.State}</h2>
-                <h2 className="city">—</h2>
+                {card.State && <h2 className="state">{card.State}</h2>}
+                {card.State && <h2 className="city">—</h2>}
                 <h2 className="city">{card.City}</h2>
               </div>
-            </div>
+            </motion.div>
 
-            <motion.p layout className="description">
-              <AnimatePresence>
-                {isSelected && (
-                  <Linkify onClick={(e) => e.stopPropagation()}>
-                    {card['Doucette Text']}
-                  </Linkify>
-                )}
-              </AnimatePresence>
-            </motion.p>
+            <AnimatePresence>
+              {isSelected && (
+                <motion.p
+                  layout
+                  className="description"
+                  onClick={(e) => e.stopPropagation()}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                >
+                  {card['Doucette Text']}
+                </motion.p>
+              )}
+            </AnimatePresence>
           </motion.div>
 
-          <div className="video-wrapper">
-            {/* <img
-              src="https://uploads-ssl.webflow.com/5b8085feb775a93368662104/5eefd85b0be60463e04b9187_video-placeholder.v1.svg"
-              height=""
-              alt=""
-              className="image"
-              /> */}
+          <AnimatePresence>
+            {isSelected && (
+              <motion.div
+                layout
+                className="video-wrapper"
+                // data-is-selected={isSelected}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+              >
+                {/* <img
+                src="https://uploads-ssl.webflow.com/5b8085feb775a93368662104/5eefd85b0be60463e04b9187_video-placeholder.v1.svg"
+                height=""
+                alt=""
+                className="image"
+                /> */}
 
-            <video
-              className="video"
-              onClick={(e) => e.stopPropagation()}
-              controls
-              ref={videoRef}
-            >
-              <source
-                onError={() => setMissingMedia(true)}
-                src={`https://s3.wasabisys.com/police-brutality/doucette-thread/${card.Video['Image Filename']}`}
-              />
-            </video>
-          </div>
+                <video
+                  className="video"
+                  onClick={(e) => e.stopPropagation()}
+                  controls
+                  ref={videoRef}
+                >
+                  <source
+                    onError={() => setMissingMedia(true)}
+                    src={`https://s3.wasabisys.com/police-brutality/doucette-thread/${card.Video['Image Filename']}`}
+                  />
+                </video>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           {/* {isSelected && (
             <div className="tweet-wrapper">
@@ -92,7 +121,7 @@ export default forwardRef((props, ref) => {
             </div>
           )} */}
 
-          {!isSelected && (
+          {!isSelected ? (
             <Link
               className="card-open-link"
               to={{
@@ -100,10 +129,18 @@ export default forwardRef((props, ref) => {
                 cardSlug: itemSlug,
               }}
             />
+          ) : (
+            <Link
+              className="card-open-link"
+              to={{
+                pathname: '/',
+                cardSlug: null,
+              }}
+            />
           )}
-        </div>
-      </div>
-    </div>
+        </motion.div>
+      </motion.div>
+    </motion.div>
   )
 })
 
