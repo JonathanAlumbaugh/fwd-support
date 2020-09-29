@@ -482,15 +482,6 @@
   display: none;
 }
 
-.city {
-  margin-right: 0.4em;
-  margin-bottom: 0px;
-  font-family: 'Source Code Pro', sans-serif;
-  font-size: 2em;
-  line-height: 1em;
-  font-weight: 200;
-}
-
 .image {
   display: inline-block;
   width: 100%;
@@ -531,39 +522,12 @@
   box-shadow: 0 1px 10px 0 rgba(0, 0, 0, 0.25);
 }
 
-.description {
-  margin-bottom: 0px;
-  font-family: Inconsolata, monospace;
-  font-size: 1.2em;
-  line-height: 1.3em;
-  font-weight: 400;
-  text-transform: lowercase;
-  display: contents;
-}
-
 .share-wrapper {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
   overflow: hidden;
-}
-
-.video-wrapper {
-  display: flex;
-  opacity: 0;
-  height: 0;
-  background-color: transparent;
-
-  // &[data-is-open='true'] {
-  //   opacity: 1;
-  //   height: auto;
-  // }
-}
-
-.video {
-  width: 100% !important;
-  height: auto !important;
 }
 
 .text-block-2 {
@@ -629,30 +593,14 @@
     font-size: 1.1em;
   }
 
-  .city {
-    font-size: 2.3em;
-  }
-
   .image {
     height: 100%;
     -o-object-fit: cover;
     object-fit: cover;
   }
 
-  .title-wrapper {
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-    -ms-flex-align: center;
-    align-items: center;
-  }
-
   .share-button {
     margin-top: 0rem;
-  }
-
-  .description {
-    margin-top: 0px;
-    font-size: 1.1em;
   }
 
   .share-wrapper {
@@ -666,21 +614,6 @@
     -webkit-order: 2;
     -ms-flex-order: 2;
     order: 2;
-  }
-
-  .video-wrapper {
-    overflow: hidden;
-    width: 550px;
-    // height: 309px;
-    margin-left: 1.5em;
-    -webkit-box-ordinal-group: 4;
-    -webkit-order: 3;
-    -ms-flex-order: 3;
-    order: 3;
-    -webkit-box-flex: 0;
-    -webkit-flex: 0 0 auto;
-    -ms-flex: 0 0 auto;
-    flex: 0 0 auto;
   }
 }
 
@@ -746,9 +679,6 @@
     object-fit: cover;
   }
 
-  .description {
-    font-size: 1.1em;
-  }
   .share-wrapper {
     position: static;
     margin-top: 1rem;
@@ -939,12 +869,7 @@
     margin-bottom: 0.2rem;
     font-size: 0.9em;
   }
-  .city {
-    font-size: 1.5em;
-  }
-  .description {
-    font-size: 1em;
-  }
+
   .state {
     font-size: 4em;
   }

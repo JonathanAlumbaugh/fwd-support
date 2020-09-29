@@ -33,7 +33,7 @@ export default forwardRef((props, ref) => {
 
   return (
     <div
-      className={`collection-item${isSelected ? ' open' : null}`}
+      className={`collection-item${isSelected ? ' open' : ''}`}
       role="listitem"
       ref={ref}
     >
