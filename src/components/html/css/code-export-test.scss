@@ -482,6 +482,90 @@
   display: none;
 }
 
+.city {
+  margin-right: 0.4em;
+  margin-bottom: 0px;
+  font-family: 'Source Code Pro', sans-serif;
+  font-size: 2em;
+  line-height: 1em;
+  font-weight: 200;
+}
+
+.image {
+  display: inline-block;
+  width: 100%;
+}
+
+.item-number {
+  margin-top: 3.5em;
+  margin-right: 0.4em;
+  margin-bottom: 0px;
+  font-family: 'Roboto Mono', sans-serif;
+  color: #ffc107;
+  font-size: 1em;
+  line-height: 1em;
+  font-weight: 700;
+}
+
+.share-button {
+  position: relative;
+  z-index: 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin-top: 1rem;
+  border: 0px solid #333;
+  background-color: #ffc107;
+  -webkit-transition: box-shadow 200ms ease;
+  transition: box-shadow 200ms ease;
+  font-family: 'Source Code Pro', sans-serif;
+  color: #333;
+  font-weight: 900;
+}
+
+.share-button:hover {
+  z-index: 1;
+  border-style: solid;
+  border-width: 0px;
+  box-shadow: 0 1px 10px 0 rgba(0, 0, 0, 0.25);
+}
+
+.description {
+  margin-bottom: 0px;
+  font-family: Inconsolata, monospace;
+  font-size: 1.2em;
+  line-height: 1.3em;
+  font-weight: 400;
+  text-transform: lowercase;
+  display: contents;
+}
+
+.share-wrapper {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  overflow: hidden;
+}
+
+.video-wrapper {
+  display: flex;
+  opacity: 0;
+  height: 0;
+  background-color: transparent;
+
+  // &[data-is-open='true'] {
+  //   opacity: 1;
+  //   height: auto;
+  // }
+}
+
+.video {
+  width: 100% !important;
+  height: auto !important;
+}
+
 .text-block-2 {
   color: #fa0000;
   font-weight: 700;
@@ -555,17 +639,6 @@
     object-fit: cover;
   }
 
-  .content-wrapper {
-    -webkit-box-ordinal-group: 2;
-    -webkit-order: 1;
-    -ms-flex-order: 1;
-    order: 1;
-    -webkit-box-flex: 1;
-    -webkit-flex: 1;
-    -ms-flex: 1;
-    flex: 1;
-  }
-
   .title-wrapper {
     -webkit-box-align: center;
     -webkit-align-items: center;
@@ -608,10 +681,6 @@
     -webkit-flex: 0 0 auto;
     -ms-flex: 0 0 auto;
     flex: 0 0 auto;
-  }
-
-  .state {
-    margin-right: 0.1em;
   }
 }
 
@@ -675,12 +744,6 @@
     height: 100%;
     -o-object-fit: cover;
     object-fit: cover;
-  }
-  .content-wrapper {
-    -webkit-box-ordinal-group: 1;
-    -webkit-order: 0;
-    -ms-flex-order: 0;
-    order: 0;
   }
 
   .description {

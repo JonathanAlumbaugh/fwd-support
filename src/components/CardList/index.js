@@ -10,7 +10,11 @@ export const List = ({ cardData, match }) => {
   const scrollToRef = async (ref) => {
     const { current } = await ref
     if (current)
-      window.scrollTo({ left: 0, top: current.offsetTop, behavior: 'smooth' })
+      window.scrollTo({
+        left: 0,
+        top: current.offsetTop - 25,
+        behavior: 'smooth',
+      })
   }
 
   return (
