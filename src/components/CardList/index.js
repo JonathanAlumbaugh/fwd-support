@@ -71,6 +71,19 @@ export default ({ match }) => {
       : setPageNumber(totalPages)
   }, [history, pageNumber, totalPages])
 
+  const setPage = useCallback(
+    (i) => {
+      history.push({
+        pathname: '/',
+        pageId: `${i + 1}`,
+        cardId: null,
+        state: { pageId: pageNumber },
+      })
+      setPageNumber(i + 1)
+    },
+    [history, pageNumber],
+  )
+
   // console.log('page', pageId, cardId)
 
   useEffect(() => {
@@ -129,21 +142,13 @@ export default ({ match }) => {
 
         {Array.apply(null, { length: totalPages }).map((p, i) => {
           return (
-            <Link
-              to={{
-                pathname: '/',
-                pageId: `${i + 1}`,
-                cardId: null,
-                state: { pageId: pageNumber },
-              }}
+            <button
+              onClick={() => setPage(i)}
               key={i}
-              onClick={() => {
-                setPageNumber(i + 1)
-              }}
               style={{ margin: '0.2em' }}
             >
               {i + 1}
-            </Link>
+            </button>
           )
         })}
 
