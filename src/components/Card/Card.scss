@@ -6,6 +6,8 @@
   flex: 1;
   color: #fff;
 
+  min-width: 75vw;
+
   // &[data-is-selected='true'] {
   //   flex-basis: 100%;
   // }
@@ -16,6 +18,10 @@
   }
 
   @media screen and (max-width: 1080px) {
+    min-width: 500px;
+  }
+
+  @media screen and (min-width: 1081px) {
     min-width: 500px;
   }
 
@@ -67,6 +73,7 @@
   @media screen and (max-width: 767px) {
     width: 100%;
     flex: 1;
+    margin-bottom: 1em;
   }
 
   // @media screen and (min-width: 1280px) {
