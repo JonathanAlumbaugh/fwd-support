@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
 
 import '../html/css/webflow.scss'
@@ -7,8 +7,8 @@ import './Nav.scss'
 import '../html/css/code-export-test.scss'
 
 function Nav() {
-  let [searchShown, setSearchShown] = useState(false)
-  let [contactShown, setContactShown] = useState(false)
+  // let [searchShown, setSearchShown] = useState(false)
+  // let [contactShown, setContactShown] = useState(false)
 
   let location = useLocation()
 
