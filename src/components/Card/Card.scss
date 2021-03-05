@@ -25,6 +25,10 @@
     flex: 1;
   }
 
+  @media screen and (max-width: 1080px) {
+    min-width: 500px;
+  }
+
   @media screen and (min-width: 1280px) {
     width: 100%;
   }
