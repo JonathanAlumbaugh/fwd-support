@@ -6,33 +6,65 @@
 }
 
 .collection-list {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
   justify-content: space-between;
-  -webkit-flex-wrap: wrap;
-  -ms-flex-wrap: wrap;
   flex-wrap: wrap;
-}
-
-@media screen and (min-width: 1920px) {
-  .collection-list {
-    -webkit-justify-content: space-around;
-    -ms-flex-pack: distribute;
-    justify-content: space-around;
-  }
 }
 
 @media screen and (max-width: 767px) {
   .collection-list {
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -webkit-flex-direction: column;
-    -ms-flex-direction: column;
     flex-direction: column;
+  }
+}
+
+@media screen and (min-width: 1920px) {
+  .collection-list {
+    justify-content: space-around;
+  }
+}
+
+.paging-button {
+  width: 2.5em;
+  height: 2em;
+
+  background-color: #ffc107;
+  color: black;
+}
+
+.paging-controls {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  justify-content: center;
+}
+
+.paging-numbers {
+  display: flex;
+  flex-direction: row;
+
+  margin: 0.2em;
+
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+}
+
+.paging-number {
+  margin-right: 0.3em;
+  margin-left: 0.3em;
+  margin-bottom: 0px;
+  font-family: 'Roboto Mono', sans-serif;
+  color: #ffc107;
+  font-size: 1em;
+  line-height: 1em;
+  font-weight: 700;
+
+  &-divider {
+    border-color: #ffc107;
+    width: 1em;
+
+    margin: 0.5em;
+    margin-top: 0.4em;
+    margin-bottom: 0;
   }
 }
