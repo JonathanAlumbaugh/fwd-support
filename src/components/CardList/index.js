@@ -3,6 +3,12 @@ import { Link, useLocation } from 'react-router-dom'
 import { motion, AnimateSharedLayout } from 'framer-motion'
 import axios from 'axios'
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {
+  faChevronLeft,
+  faChevronRight,
+} from '@fortawesome/free-solid-svg-icons'
+
 import Card from '../Card'
 import './CardList.scss'
 
@@ -117,7 +123,7 @@ export default ({ match }) => {
             pageNumber > 1 ? setPageNumber(pageNumber - 1) : setPageNumber(1)
           }}
         >
-          &lt;prev
+          <FontAwesomeIcon icon={faChevronLeft} />
         </button>
         {Array.apply(null, { length: totalPages }).map((p, i) => {
           return (
@@ -140,7 +146,7 @@ export default ({ match }) => {
               : setPageNumber(totalPages)
           }}
         >
-          next&gt;
+          <FontAwesomeIcon icon={faChevronRight} />
         </button>
         <div className="collection-list w-dyn-items">
           <List cardData={cardData} match={match} />
