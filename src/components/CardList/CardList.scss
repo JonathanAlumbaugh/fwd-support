@@ -11,13 +11,13 @@
   flex-wrap: wrap;
 }
 
-@media screen and (min-width: 1920px) {
+@media screen and (max-width: 767px) {
   .collection-list {
     flex-direction: column;
   }
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (min-width: 1920px) {
   .collection-list {
     justify-content: space-around;
   }

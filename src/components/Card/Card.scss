@@ -157,6 +157,7 @@
   @media screen and (min-width: 1280px) {
     flex-direction: row;
     flex: 1;
+    overflow: auto;
   }
 
   @media screen and (min-width: 1440px) {
@@ -177,16 +178,17 @@
   flex-direction: column;
 
   overflow: hidden;
-  height: 0;
-  transition: height, opacity 0.2s ease-out;
+  // height: 0;
+  // transition: height, opacity 0.2s ease-out;
 
-  &[data-is-selected='true'] {
-    height: auto;
-  }
+  // &[data-is-selected='true'] {
+  //   height: auto;
+  // }
 
   @media screen and (min-width: 1280px) {
     order: 1;
     flex: 1;
+    height: unset;
   }
 
   @media screen and (min-width: 1440px) {
