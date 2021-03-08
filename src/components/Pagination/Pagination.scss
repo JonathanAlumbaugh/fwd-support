@@ -1,0 +1,45 @@
+.paging-button {
+  width: 2.5em;
+  height: 2em;
+
+  background-color: #ffc107;
+  color: black;
+}
+
+.paging-controls {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  justify-content: center;
+}
+
+.paging-numbers {
+  display: flex;
+  flex-direction: row;
+
+  margin: 0.2em;
+
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+}
+
+.paging-number {
+  margin-right: 0.3em;
+  margin-left: 0.3em;
+  margin-bottom: 0px;
+  font-family: 'Roboto Mono', sans-serif;
+  color: #ffc107;
+  font-size: 1em;
+  line-height: 1em;
+  font-weight: 700;
+
+  &-divider {
+    border-color: #ffc107;
+    width: 1em;
+
+    margin: 0.5em;
+    margin-top: 0.4em;
+    margin-bottom: 0;
+  }
+}

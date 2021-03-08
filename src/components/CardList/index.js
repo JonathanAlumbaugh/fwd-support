@@ -1,13 +1,10 @@
 import React, { useState, useEffect, createRef } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { motion, AnimateSharedLayout } from 'framer-motion'
 import axios from 'axios'
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-  faChevronLeft,
-  faChevronRight,
-} from '@fortawesome/free-solid-svg-icons'
+import Pagination from '../Pagination'
+import '../Pagination/Pagination.scss'
 
 import Card from '../Card'
 import './CardList.scss'
@@ -118,70 +115,15 @@ export default ({ match }) => {
   return (
     <div className="police-brutality">
       <div className="collection-list-wrapper w-dyn-list">
-        <div className="paging-controls">
-          <button
-            className="paging-button"
-            onClick={() => {
-              pageNumber > 1 ? setPageNumber(pageNumber - 1) : setPageNumber(1)
-            }}
-          >
-            <FontAwesomeIcon icon={faChevronLeft} />
-          </button>
-          <div className="paging-numbers">
-            <Link
-              className="paging-number"
-              to={{ pathname: '/', pageId: 1 }}
-              key={0}
-              onClick={() => {
-                setPageNumber(1)
-              }}
-            >
-              1
-            </Link>
-
-            <hr className="paging-number-divider" />
-
-            {Array.apply(null, { length: totalPages }).map((p, i) => {
-              if (i !== 0 && i < pageNumber + 3 && i > pageNumber - 3) {
-                return (
-                  <Link
-                    className="paging-number"
-                    to={{ pathname: '/', pageId: `${i + 1}` }}
-                    key={i}
-                    onClick={() => {
-                      setPageNumber(i + 1)
-                    }}
-                  >
-                    {i + 1}
-                  </Link>
-                )
-              }
-            })}
-
-            <hr className="paging-number-divider" />
-
-            <Link
-              className="paging-number"
-              to={{ pathname: '/', pageId: totalPages }}
-              key={totalPages}
-              onClick={() => {
-                setPageNumber(totalPages)
-              }}
-            >
-              {totalPages}
-            </Link>
+        {cardData && (
+          <div className="paging-controls">
+            <Pagination
+              pageNumber={pageNumber}
+              totalPages={totalPages}
+              setPageNumber={setPageNumber}
+            />
           </div>
-          <button
-            className="paging-button"
-            onClick={() => {
-              pageNumber < totalPages
-                ? setPageNumber(pageNumber + 1)
-                : setPageNumber(totalPages)
-            }}
-          >
-            <FontAwesomeIcon icon={faChevronRight} />
-          </button>
-        </div>
+        )}
 
         <div className="collection-list w-dyn-items">
           <List cardData={cardData} match={match} />
@@ -190,6 +132,16 @@ export default ({ match }) => {
         {!cardData && (
           <div className="w-dyn-empty">
             <div>No items found.</div>
+          </div>
+        )}
+
+        {cardData && (
+          <div className="paging-controls">
+            <Pagination
+              pageNumber={pageNumber}
+              totalPages={totalPages}
+              setPageNumber={setPageNumber}
+            />
           </div>
         )}
       </div>
